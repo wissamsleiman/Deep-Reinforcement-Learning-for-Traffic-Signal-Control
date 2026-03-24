@@ -1,5 +1,5 @@
 # Deep Reinforcement Learning for Traffic Signal Control: Real-world data and communication
-Welcome to the collaborative repository for George Washington University (GWU) and Uzilina. This repository provides:
+Welcome to the collaborative repository for George Washington University (GW) and Uzilina. This repository provides:
 1) A traffic simulation (SUMO) with traffic flow models calibrated with collected traffic data for vehicles and pedestrian: Traffic simulated on Foggy Bottom Metro intersection in Washington DC
 2) A simulated communication between connected vehicles, pedestrians and road-side units: OMNeT++ simulation embedded with SUMO to simulate all types of communication and their impact on trasnportation.
 3) A Deep Reinforcement Learning model for Traffic Signal Control that uses communicated vehicle and pedestrian information to provide optimal actions.
