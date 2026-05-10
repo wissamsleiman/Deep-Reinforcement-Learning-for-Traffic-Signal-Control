@@ -1,4 +1,13 @@
-# Deep Reinforcement Learning for Traffic Signal Control: Real-world data and communication
+<h1 align="center">Deep Reinforcement Learning for Traffic Signal Control: Real-world data and communication</h1>
+
+<p align="center">
+  <a href="https://journals.sagepub.com/doi/10.1177/03611981251384965"><img alt="TRR paper" src="https://img.shields.io/static/v1?label=TRR&amp;message=Paper&amp;color=purple&amp;style=flat-square"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://journals.sagepub.com/doi/pdf/10.1177/03611981251384965"><img alt="PDF" src="https://img.shields.io/static/v1?label=Sage&amp;message=PDF&amp;color=blue&amp;style=flat-square"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/wissamsleiman/Deep-Reinforcement-Learning-for-Traffic-Signal-Control"><img alt="License" src="https://img.shields.io/static/v1?label=License&amp;message=Not%20specified&amp;color=lightgrey&amp;style=flat-square"></a>
+</p>
+
+---
+
 Welcome to the collaborative repository for George Washington University (GW) and Uzilina. This repository provides:
 1) A traffic simulation (SUMO) with traffic flow models calibrated with collected traffic data for vehicles and pedestrian: Traffic simulated on Foggy Bottom Metro intersection in Washington DC
 2) A simulated communication between connected vehicles, pedestrians and road-side units: OMNeT++ simulation embedded with SUMO to simulate all types of communication and their impact on trasnportation.
@@ -39,3 +48,18 @@ Model 17 is the most recent best performant model
 3. In OMNeT++ workspace, navigate to "simu5g/simulations/NR/cars" and open omnetpp.ini file.
 4. Launch the simulation by selecting "Run->Run As->OMNeT++ Simulation" from the OMNeT++ menu. Select the "Hybrid-DSRC-5G" configuration when prompted. The simulation should start. If SUMO is launched in GUI mode, the simulation is initiated by launching the simulation from SUMO, otherwise, it should start automatically.
 Some edits for the pedestrian routes will be added.
+
+## Citation
+
+If you use this repository or the associated methods in your research, please cite our paper:
+
+```bibtex
+@article{sleiman2025impact,
+  title={Impact of Pedestrian and Vehicle Connectivity on Intersection Performance: A High-Fidelity Simulation with Deep Reinforcement Learning Control},
+  author={Sleiman, Wissam and Beigi, Pedram and Petrov, Tibor and Buzna, Lubos and Pocta, Peter and Hamdar, Samer},
+  journal={Transportation Research Record},
+  pages={03611981251384965},
+  year={2025},
+  publisher={SAGE Publications Sage CA: Los Angeles, CA}
+}
+```
