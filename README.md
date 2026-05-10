@@ -2,52 +2,62 @@
 
 <p align="center">
   <a href="https://journals.sagepub.com/doi/10.1177/03611981251384965"><img alt="TRR paper" src="https://img.shields.io/static/v1?label=TRR&amp;message=Paper&amp;color=purple&amp;style=flat-square"></a>&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://journals.sagepub.com/doi/pdf/10.1177/03611981251384965"><img alt="PDF" src="https://img.shields.io/static/v1?label=Sage&amp;message=PDF&amp;color=blue&amp;style=flat-square"></a>&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://github.com/wissamsleiman/Deep-Reinforcement-Learning-for-Traffic-Signal-Control"><img alt="License" src="https://img.shields.io/static/v1?label=License&amp;message=Not%20specified&amp;color=lightgrey&amp;style=flat-square"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/static/v1?label=License&amp;message=MIT&amp;color=rose&amp;style=flat-square"></a>
 </p>
 
 ---
 
-Welcome to the collaborative repository for George Washington University (GW) and Uzilina. This repository provides:
-1) A traffic simulation (SUMO) with traffic flow models calibrated with collected traffic data for vehicles and pedestrian: Traffic simulated on Foggy Bottom Metro intersection in Washington DC
-2) A simulated communication between connected vehicles, pedestrians and road-side units: OMNeT++ simulation embedded with SUMO to simulate all types of communication and their impact on trasnportation.
-3) A Deep Reinforcement Learning model for Traffic Signal Control that uses communicated vehicle and pedestrian information to provide optimal actions.
+This repository supports the work in [*Transportation Research Record*](https://journals.sagepub.com/doi/10.1177/03611981251384965) on **impact of pedestrian and vehicle connectivity on intersection performance** using a **high-fidelity co-simulation**: microscopic traffic in **SUMO** is coupled with communication stack simulation in **OMNeT++** (Veins, INET, Simu5G). Real-world trajectories from the **TGSIM** dataset calibrate vehicle routes and behavior (intelligent driver model) and pedestrian behavior (social force model). A **Deep Q-Network** traffic signal controller uses a state representation aligned with discrete-time estimation so you can study **partial connectivity**—how penetration rates for connected vehicles and pedestrians affect learning and performance relative to classical control.
 
-Both simulations can run independently or together.
-# Installation
-1) Download and install SUMO 1.2.0
-2) Download and install OMNeT++ 6.0.2. Follow OMNeT++ 6.0.2 Install Guide to build OMNeT++.
-3) Download the simulation files archive (https://gwu.box.com/s/ubhn2obphfvjuv12ju5gwgrgv9dud2qc), extract them and move them to this repository 
+It is a collaboration between **George Washington University (GW)** and **Uzilina**. The traffic simulator, communication simulator, and DRL training/testing pipeline can be used **standalone** or **together** for end-to-end experiments.
 
-## Traffic Sim
-This repository has all files needed for running the simulation:
-1) baseline_simulation.py : the simulation starts and some information will be extracted by running this python file
-2) route_creator.py creates the routing files based on extracted data and creates calibrated vehicles and pedestrians
-3) Other typical SUMO network files
+### What’s in the repository
 
-## DRL_Control 
-It contains all necessary elements to control the traffic signals using a Deep Reinforcement Learning model
+- **Traffic simulation (SUMO)** — Network and scenarios for the Foggy Bottom Metro intersection in Washington, DC, with flows derived from collected data for vehicles and pedestrians.
+- **Communication simulation (OMNeT++)** — Co-simulation with SUMO via Veins; models V2I and related links so you can explore how connectivity assumptions change outcomes.
+- **Deep reinforcement learning (DRL)** — Code to train and test a traffic signal controller that can use information from connected vehicles and pedestrians when available.
+
+## Installation
+
+1. Install **SUMO 1.2.0**.
+2. Install **OMNeT++ 6.0.2** and follow the official OMNeT++ 6.0.2 install guide to build it.
+3. Download the [simulation files archive](https://gwu.box.com/s/ubhn2obphfvjuv12ju5gwgrgv9dud2qc), extract it, and merge or place the contents alongside this repository as needed for your paths.
+
+## Traffic simulation
+
+Typical entry points and assets:
+
+1. **`Network/baseline_simulation.py`** — Start the simulation and extract information for calibration.
+2. **`Network/route_creator.py`** — Build route files from extracted data and create calibrated vehicles and pedestrians.
+3. Standard SUMO network and configuration files under **`Network/`** (e.g. `foggybottommetro.sumocfg`).
+
+## DRL control
+
+The **`DRL_Control/`** directory contains training and testing scripts, the DQN model, memory, utilities, and settings for traffic signal control with the co-simulation when you run the full stack.
 
 ## Models
-Model 17 is the most recent best performant model
-## Communication Sim
-1) Launch OMNeT++. After the first launch, you will see a pop-up window offering you to install INET and OMNeT++ sample projects. Do not install INET Framework or sample projects.
-2) Go to File->Import...->General->Existing Projects into Workspace
-3) Select the inet4.4 directory of the simulation files
-4) Enable the "Search for nested projects" option in the Import Projects dialog and click Finish to import INET.
-5) Import Simu5G project the same way following steps 2-4 and selecting the simu5G folder.
-6) Import Veins 5.2 the same way. In the Import Projects dialog, select "veins" and "veins_inet" projects. Do NOT import "veins_catch","veins_inet3" and "veins_testsims" projects.
-7) In OMNeT++ go to "Project->Clean...". Make sure the "Clean all projects" option is enabled and click Clean. If the "Start build immediately" option is checked the workspace will be built automatically. If not, select "Project->Build All (Ctrl+B)".
-8) Wait until the workspace is built. This may take a long time depending on the number of CPU cores available in your machine. 
-9) Navigate to "DRL_Control/utils.py". Adjust all paths to refer to the actual locations of the corresponding files in your filesystem. 
 
-## Combined Simulation and DRL:
-1. Make sure the $SUMO_HOME variable is set to your SUMO 1.2.0 root directory.
-2. Navigate to the location of the extracted simulation files. Open "DRL_Control/" directory and launch the "testing_main.py" using Python. 
-2. Launch OMNeT++.
-3. In OMNeT++ workspace, navigate to "simu5g/simulations/NR/cars" and open omnetpp.ini file.
-4. Launch the simulation by selecting "Run->Run As->OMNeT++ Simulation" from the OMNeT++ menu. Select the "Hybrid-DSRC-5G" configuration when prompted. The simulation should start. If SUMO is launched in GUI mode, the simulation is initiated by launching the simulation from SUMO, otherwise, it should start automatically.
-Some edits for the pedestrian routes will be added.
+Trained checkpoints live under **`models/`**. Model **17** is currently the best-performing checkpoint referenced in this project.
+
+## Communication simulation
+
+1. Launch OMNeT++. On first launch, skip installing the INET Framework and sample projects when prompted.
+2. **File → Import… → General → Existing Projects into Workspace**
+3. Import **inet4.4** from the extracted simulation files; enable **Search for nested projects**, then Finish.
+4. Import **Simu5G** the same way (select the `simu5g` folder).
+5. Import **Veins 5.2**: select **`veins`** and **`veins_inet`** only. Do **not** import `veins_catch`, `veins_inet3`, or `veins_testsims`.
+6. **Project → Clean…** with **Clean all projects**; build the workspace (**Project → Build All** / Ctrl+B if it does not build automatically).
+7. Edit **`DRL_Control/utils.py`** and set all file paths to match your machine.
+
+## Combined simulation and DRL
+
+1. Set **`SUMO_HOME`** to your SUMO 1.2.0 root directory.
+2. From your extracted simulation files location, open **`DRL_Control/`** and run **`testing_main.py`** with Python.
+3. Launch OMNeT++.
+4. Open **`simu5g/simulations/NR/cars/omnetpp.ini`** in the workspace.
+5. **Run → Run As → OMNeT++ Simulation** and choose the **Hybrid-DSRC-5G** configuration. If SUMO uses the GUI, start the run from SUMO as needed; otherwise the coupled run should start automatically.
+
+Additional pedestrian-route updates may be documented in the repo over time.
 
 ## Citation
 
@@ -63,3 +73,7 @@ If you use this repository or the associated methods in your research, please ci
   publisher={SAGE Publications Sage CA: Los Angeles, CA}
 }
 ```
+
+## License
+
+This project is licensed under the MIT License; see [LICENSE](LICENSE).
